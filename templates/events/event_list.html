@@ -1,0 +1,22 @@
+
+
+
+
+{% extends 'adminsite/dashboard.html' %}
+
+{% block admincontent %}
+
+<main id="main" class="main">
+    <h2>Events</h2>
+    <a href="{% url 'event_create' %}">Create New Event</a>
+    <ul>
+        {% for event in events %}
+        <li>
+            {{ event.team1.name }} vs {{ event.team2.name }} - {{ event.date_time }}
+            <a href="{% url 'event_update' event.id %}">Edit</a>
+            <a href="{% url 'event_delete' event.id %}">Delete</a>
+        </li>
+        {% endfor %}
+    </ul>
+</main>
+{% endblock %}

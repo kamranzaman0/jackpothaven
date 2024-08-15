@@ -1,0 +1,77 @@
+{% extends 'adminsite/dashboard.html' %}
+
+{% block admincontent %}
+<style>
+    /* adminsite/static/css/styles.css */
+
+/* Style for the user list table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+th {
+    background-color: #f2f2f2;
+    color: #333;
+    font-weight: bold;
+}
+
+tr:hover {
+    background-color: #f5f5f5;
+}
+
+/* Style for the Change Role link */
+a {
+    color: blue;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+</style>
+
+<main id="main" class="main">
+
+    <h1>User List</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>is Staf</th>
+                <th>is Active</th>
+                <th>Is SuperUser</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.role }}</td>
+                <th>{{user.is_staff}}</th>
+                <th>{{user.is_active}}</th>
+                <th>{{user.is_superuser}}</th>
+
+
+                <td>
+                    <a href="{% url 'change_user_role' user.id %}">Change Role</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</main>
+{% endblock %}

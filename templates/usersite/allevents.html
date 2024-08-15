@@ -1,0 +1,288 @@
+
+{% extends 'base.html' %}
+{% block content %}
+    
+{% load static %}
+<!-- Style for Show all the Events in Database -->
+<style>
+    .slider-container {
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+    }
+
+    .event-list {
+        display: flex;
+        transition: transform 0.5s ease;
+    }
+
+    .event-card {
+        flex: 0 0 calc(33.333% - 20px); 
+        box-sizing: border-box;
+        padding: 0 10px;
+        height: 100%;
+        min-width: 300px; 
+        max-width: 400px; 
+    }
+
+    .slider-btn-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center; /* Center vertically */
+        position: absolute;
+        top: 160%;
+        left: 0;
+        right: 0;
+        transform: translateY(-50%);
+        z-index: 100;
+    }
+
+    .slider-btn {
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        border: none;
+        padding: 20px;
+        cursor: pointer;
+        z-index: 100;
+    }
+
+    .event-info {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        padding: 1rem;
+        background-color: #f8f8f8;
+        border-bottom: 1px solid #ddd;
+        height: 100%;
+    }
+
+    .team img {
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+    }
+
+    .team h3 {
+        margin: 0;
+        font-size: 1.2rem;
+    }
+
+    .vs {
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    .event-details {
+        padding: 1rem;
+        text-align: center;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .event-details p {
+        margin: 0.5rem 0;
+    }
+
+    .btn-bet {
+        margin-top: auto;
+        display: inline-block;
+    }
+
+</style>
+<!-- Style for Show all the Events in Database End -->
+
+
+
+
+<!-- Header Start -->
+    <div class="jumbotron jumbotron-fluid mb-5">
+        <div class="container text-center py-5">
+            <h1 class="text-white mb-4">You are On the Right Spot</h1>
+            <h1 class="text-primary text-uppercase font-weight-bold mb-4">
+                We Have a Lots of Spots Where you can Bet & Winn Jackpot
+            </h1>
+        </div>
+    </div>
+<!-- Header End -->
+
+<!-- FootBal Start -->
+<div class="container-fluid pt-5">
+    <div class="container">
+        <div class="text-center pb-2">
+            <h6 class="text-primary text-uppercase font-weight-bold">Upcoming FootBal Matches</h6>
+            <h1 class="mb-4">Bet on Your Favorite Team</h1>
+        </div>
+        <div class="row pb-3">
+
+            {% for event in footbalevents %}
+            <div class="event-card">
+                <div class="bg-secondary">
+                    <div class="event-info">
+                        <div class="team team1">
+                            <img src="{{ event.team1.logo.url }}" alt="{{ event.team1.name }} Logo">
+                            <h3>{{ event.team1.name }}</h3>
+                        </div>
+                        <div class="vs">vs</div>
+                        <div class="team team2">
+                            <img src="{{ event.team2.logo.url }}" alt="{{ event.team2.name }} Logo">
+                            <h3>{{ event.team2.name }}</h3>
+                        </div>
+                    </div>
+                    <div class="event-details">
+                        <p><strong>Date and Time:</strong> {{ event.date_time|date:"F j, Y, g:i a" }}</p>
+                        <p><strong>Sport:</strong> {{ event.sport_type.name }}</p>
+                        <p><strong>Betting Price:</strong> {{ event.betting_price }}</p>
+                        <p></p>
+                        <p style="cursor: pointer;"><a href="{% url 'detail_of_event' event.id %}">See More</a></p>
+
+
+                        <a href="{% url 'checkout' event.id %}" class="btn btn-primary btn-bet">Bet Now</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</div>
+<!-- FootBal End -->
+
+
+<!-- Cricket Start -->
+<div class="container-fluid bg-secondary my-2">
+    <div class="container" style="padding-top: 5%">
+        <div class="text-center pb-2">
+            <h6 class="text-primary text-uppercase font-weight-bold">Upcoming Cricket Matches</h6>
+            <h1 class="mb-4">Bet on Your Favorite Team</h1>
+        </div>
+        <div class="row pb-3">
+
+            {% for event in cricketevents %}
+            <div class="event-card">
+                <div class="bg-secondary">
+                    <div class="event-info">
+                        <div class="team team1">
+                            <img src="{{ event.team1.logo.url }}" alt="{{ event.team1.name }} Logo">
+                            <h3>{{ event.team1.name }}</h3>
+                        </div>
+                        <div class="vs">vs</div>
+                        <div class="team team2">
+                            <img src="{{ event.team2.logo.url }}" alt="{{ event.team2.name }} Logo">
+                            <h3>{{ event.team2.name }}</h3>
+                        </div>
+                    </div>
+                    <div class="event-details">
+                        <p><strong>Date and Time:</strong> {{ event.date_time|date:"F j, Y, g:i a" }}</p>
+                        <p><strong>Sport:</strong> {{ event.sport_type.name }}</p>
+                        <p><strong>Betting Price:</strong> {{ event.betting_price }}</p>
+                        <p></p>
+                        <p style="cursor: pointer;"><a href="{% url 'detail_of_event' event.id %}">See More</a></p>
+
+
+                        <a href="{% url 'checkout' event.id %}" class="btn btn-primary btn-bet">Bet Now</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<!-- Cricket End -->
+
+
+
+<!-- BaseBall Start -->
+<div class="container-fluid pt-5">
+    <div class="container">
+        <div class="text-center pb-2">
+            <h6 class="text-primary text-uppercase font-weight-bold">Upcoming BaseBal Matches</h6>
+            <h1 class="mb-4">Bet on Your Favorite Team</h1>
+        </div>
+        <div class="row pb-3">
+
+            {% for event in basebalevents %}
+            <div class="event-card">
+                <div class="bg-secondary">
+                    <div class="event-info">
+                        <div class="team team1">
+                            <img src="{{ event.team1.logo.url }}" alt="{{ event.team1.name }} Logo">
+                            <h3>{{ event.team1.name }}</h3>
+                        </div>
+                        <div class="vs">vs</div>
+                        <div class="team team2">
+                            <img src="{{ event.team2.logo.url }}" alt="{{ event.team2.name }} Logo">
+                            <h3>{{ event.team2.name }}</h3>
+                        </div>
+                    </div>
+                    <div class="event-details">
+                        <p><strong>Date and Time:</strong> {{ event.date_time|date:"F j, Y, g:i a" }}</p>
+                        <p><strong>Sport:</strong> {{ event.sport_type.name }}</p>
+                        <p><strong>Betting Price:</strong> {{ event.betting_price }}</p>
+                        <p></p>
+                        <p style="cursor: pointer;"><a href="{% url 'detail_of_event' event.id %}">See More</a></p>
+
+
+                        <a href="{% url 'checkout' event.id %}" class="btn btn-primary btn-bet">Bet Now</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</div>
+<!-- BaseBall End -->
+
+
+<!-- VollyBal Start -->
+<div class="container-fluid bg-secondary my-2">
+    <div class="container" style="padding-top: 5%">
+        <div class="text-center pb-2">
+            <h6 class="text-primary text-uppercase font-weight-bold">Upcoming VollyBal Matches</h6>
+            <h1 class="mb-4">Bet on Your Favorite Team</h1>
+        </div>
+        <div class="row pb-3">
+
+            {% for event in vollybalevents %}
+            <div class="event-card">
+                <div class="bg-secondary">
+                    <div class="event-info">
+                        <div class="team team1">
+                            <img src="{{ event.team1.logo.url }}" alt="{{ event.team1.name }} Logo">
+                            <h3>{{ event.team1.name }}</h3>
+                        </div>
+                        <div class="vs">vs</div>
+                        <div class="team team2">
+                            <img src="{{ event.team2.logo.url }}" alt="{{ event.team2.name }} Logo">
+                            <h3>{{ event.team2.name }}</h3>
+                        </div>
+                    </div>
+                    <div class="event-details">
+                        <p><strong>Date and Time:</strong> {{ event.date_time|date:"F j, Y, g:i a" }}</p>
+                        <p><strong>Sport:</strong> {{ event.sport_type.name }}</p>
+                        <p><strong>Betting Price:</strong> {{ event.betting_price }}</p>
+                        <p></p>
+                        <p style="cursor: pointer;"><a href="{% url 'detail_of_event' event.id %}">See More</a></p>
+
+
+                        <a href="{% url 'checkout' event.id %}" class="btn btn-primary btn-bet">Bet Now</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<!-- FootBal End -->
+
+
+
+
+
+
+{% endblock content %}
+    

@@ -1,0 +1,34 @@
+{% extends 'adminsite/dashboard.html' %}
+
+{% block admincontent %}
+
+<main id="main" class="main">
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2>SportType List</h2>
+            <a href="{% url 'sporttype_create' %}" class="btn btn-primary">Create SportType</a>
+        </div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sporttype in sporttypes %}
+                <tr>
+                    <td>{{ sporttype.id }}</td>
+                    <td>{{ sporttype.name }}</td>
+                    <td>
+                        <a href="{% url 'sporttype_update' sporttype.id %}" class="btn btn-sm btn-warning">Edit</a>
+                        <a href="{% url 'sporttype_delete' sporttype.id %}" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>  
+</main> 
+{% endblock %}

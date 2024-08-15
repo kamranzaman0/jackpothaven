@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% load static %}
+
+<!-- Header Start -->
+<div class="jumbotron jumbotron-fluid mb-5">
+    <div class="container text-center py-5">
+        <div class="row">
+            <!-- Left side: Pakistan -->
+            <div class="col-md-5 d-flex align-items-center justify-content-end">
+                <div class="mr-3">
+                    <img src="{{ events.team1.flag.url }}" alt="{{ events.team1.name }}" style="width: 50px;">
+                </div>
+                <h1 class="text-white mb-0" style="font-size: 40px;">{{ events.team1.name }}</h1>
+            </div>
+            <!-- VS -->
+            <div class="col-md-2 d-flex align-items-center justify-content-center">
+                <h1 class="text-white mb-0" style="font-size: 30px;">VS</h1>
+            </div>
+            <!-- Right side: India -->
+            <div class="col-md-5 d-flex align-items-center justify-content-start">
+                <h1 class="text-white mb-0" style="font-size: 40px;">{{ events.team2.name }}</h1>
+                <div class="ml-3">
+                    <img src="{{ events.team2.flag.url }}" alt="{{ events.team2.name }}" style="width: 50px;">
+                </div>
+            </div>
+        </div>
+        <h6 class="text-white display-4 mt-4 mb-5">Win Big with Jackpot Haven</h6>
+        <div class="mx-auto" style="width: 100%; max-width: 600px;">
+            <div class="input-group justify-content-center">
+                <a href="{% url 'checkout' events.id %}">
+                    <button class="btn btn-primary px-5">Bet Now</button>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Header End -->
+
+<!-- Match Details -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h2 class="mb-4">Match Details</h2>
+            <ul class="list-group">
+                <li class="list-group-item">Date and Time: <strong>{{ events.date_time }}</strong></li>
+                <li class="list-group-item">Stadium: <strong>{{ events.venue.name }}</strong></li>
+                <li class="list-group-item">City: <strong>{{ events.venue.city }}</strong></li>
+                <li class="list-group-item">Stadium: <strong>{{ events.venue.country }}</strong></li>
+                <li class="list-group-item">Capacity: <strong>{{ events.venue.capacity}}</strong></li>
+
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <h2 class="mb-4">Teams Detail</h2>
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="mb-0">{{ events.team1.name }}</h3>
+                </div>
+                <div class="card-body">
+                    <p><strong>Captain:</strong> {{ events.team1.captain.name }}</p>
+                    <p><strong>Vice Captain:</strong> {{ team1.vice_captain }}</p>
+                    <p><strong>Head Coach:</strong> {{ events.team1.head_coach }}</p>
+                    <!-- Add more details as needed -->
+                </div>
+            </div>
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h3 class="mb-0">{{ events.team2.name}}</h3>
+                </div>
+                <div class="card-body">
+                    <p><strong>Captain:</strong> {{ events.team2.captain.name }}</p>
+                    <p><strong>Vice Captain:</strong> {{ team2.vice_captain }}</p>
+                    <p><strong>Head Coach:</strong> {{ events.team2.head_coach }}</p>
+                    <!-- Add more details as needed -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Match Details End -->
+
+{% endblock content %}

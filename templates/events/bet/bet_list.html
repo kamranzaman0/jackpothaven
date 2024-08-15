@@ -1,0 +1,17 @@
+
+{% extends 'adminsite/dashboard.html' %}
+
+{% block admincontent %}
+
+<main id="main" class="main">
+    <h2>Bet List</h2>
+    <a href="{% url 'bet_create' %}">Create New Bet</a>
+  <ul>
+    {% for bet in bets %}
+        <li>{{ bet }}</li>
+        <a href="{% url 'bet_update' bet.id %}">Edit</a>
+        <a href="{% url 'bet_delete' bet.id %}">Delete</a>
+    {% endfor %}
+  </ul>
+</main>
+{% endblock %}

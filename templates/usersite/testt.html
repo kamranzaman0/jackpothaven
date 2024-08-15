@@ -1,0 +1,186 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% load static %}
+
+<style>
+    .slider-container {
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+    }
+
+    .event-list {
+        display: flex;
+        transition: transform 0.5s ease;
+    }
+
+    .event-card {
+        flex: 0 0 calc(33.333% - 20px); 
+        box-sizing: border-box;
+        padding: 0 10px;
+        height: 100%;
+        min-width: 300px; 
+        max-width: 400px; 
+    }
+
+    .slider-btn-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center; /* Center vertically */
+        position: absolute;
+        top: 90%;
+        left: 0;
+        right: 0;
+        transform: translateY(-50%);
+        z-index: 100;
+    }
+
+    .slider-btn {
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        border: none;
+        padding: 20px;
+        cursor: pointer;
+        z-index: 100;
+    }
+
+    .event-info {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        padding: 1rem;
+        background-color: #f8f8f8;
+        border-bottom: 1px solid #ddd;
+        height: 100%;
+    }
+
+    .team img {
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+    }
+
+    .team h3 {
+        margin: 0;
+        font-size: 1.2rem;
+    }
+
+    .vs {
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    .event-details {
+        padding: 1rem;
+        text-align: center;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .event-details p {
+        margin: 0.5rem 0;
+    }
+
+    .btn-bet {
+        margin-top: auto;
+        display: inline-block;
+    }
+
+</style>
+
+<!-- Show all the Events in Database -->
+<div class="container-fluid pt-5">
+    <div class="container">
+        <div class="text-center pb-2">
+            <h6 class="text-primary text-uppercase font-weight-bold">UPCOMING MATCHES</h6>
+            <h1 class="mb-4">Bet on Your Favorite Team</h1>
+        </div>
+        <div class="slider-container">
+            <div class="event-list">
+                {% for event in events %}
+                <div class="event-card">
+                    <div class="bg-secondary">
+                        <div class="event-info">
+                            <div class="team team1">
+                                <img src="{{ event.team1.logo.url }}" alt="{{ event.team1.name }} Logo">
+                                <h3>{{ event.team1.name }}</h3>
+                            </div>
+                            <div class="vs">vs</div>
+                            <div class="team team2">
+                                <img src="{{ event.team2.logo.url }}" alt="{{ event.team2.name }} Logo">
+                                <h3>{{ event.team2.name }}</h3>
+                            </div>
+                        </div>
+                        <div class="event-details">
+                            <p><strong>Date and Time:</strong> {{ event.date_time|date:"F j, Y, g:i a" }}</p>
+                            <p><strong>Sport:</strong> {{ event.sport_type.name }}</p>
+                            <p><strong>Betting Price:</strong> {{ event.betting_price }}</p>
+                            <p></p>
+                            <p style="cursor: pointer;"><a href="#">See More</a></p>
+
+
+                            <a href="#" class="btn btn-primary btn-bet">Bet Now</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="slider-btn-container">
+            <button class="slider-btn prev-btn"><i class="fas fa-chevron-left"></i></button>
+            <button class="slider-btn next-btn"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+</div>
+
+<!-- Show all the Events in Database End -->
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const eventList = document.querySelector('.event-list');
+        const prevBtn = document.querySelector('.prev-btn');
+        const nextBtn = document.querySelector('.next-btn');
+
+        let currentIndex = 0;
+        const itemsToShow = 3;
+        const itemCount = document.querySelectorAll('.event-card').length;
+        const itemWidth = document.querySelector('.event-card').offsetWidth + 20; // card width + padding
+
+        function updateSliderPosition() {
+            eventList.style.transform = `translateX(${-currentIndex * itemWidth}px)`;
+        }
+
+        nextBtn.addEventListener('click', () => {
+            if (currentIndex < itemCount - itemsToShow) {
+                currentIndex++;
+            } else {
+                currentIndex = 0;
+            }
+            updateSliderPosition();
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+            } else {
+                currentIndex = itemCount - itemsToShow;
+            }
+            updateSliderPosition();
+        });
+
+        // Auto slide
+        setInterval(() => {
+            if (currentIndex < itemCount - itemsToShow) {
+                currentIndex++;
+            } else {
+                currentIndex = 0;
+            }
+            updateSliderPosition();
+        }, 5000);
+    });
+</script>
+
+{% endblock content %}

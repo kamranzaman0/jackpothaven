@@ -1,0 +1,14 @@
+{% extends 'adminsite/dashboard.html' %}
+
+{% block admincontent %}
+
+<main id="main" class="main">
+    <h1>{{ form.instance.pk|yesno:"Edit Venue,Add Venue" }}</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save</button>
+    </form>
+    <a href="{% url 'venue_list' %}">Cancel</a>
+</main>
+{% endblock %}

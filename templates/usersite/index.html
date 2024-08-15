@@ -1,0 +1,311 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% load static %}
+
+<!-- Style for Show all the Events in Database -->
+<style>
+    .slider-container {
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+    }
+
+    .event-list {
+        display: flex;
+        transition: transform 0.5s ease;
+    }
+
+    .event-card {
+        flex: 0 0 calc(33.333% - 20px); 
+        box-sizing: border-box;
+        padding: 0 10px;
+        height: 100%;
+        min-width: 300px; 
+        max-width: 400px; 
+    }
+
+    .slider-btn-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center; /* Center vertically */
+        position: absolute;
+        top: 160%;
+        left: 0;
+        right: 0;
+        transform: translateY(-50%);
+        z-index: 100;
+    }
+
+    .slider-btn {
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        border: none;
+        padding: 20px;
+        cursor: pointer;
+        z-index: 100;
+    }
+
+    .event-info {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        padding: 1rem;
+        background-color: #f8f8f8;
+        border-bottom: 1px solid #ddd;
+        height: 100%;
+    }
+
+    .team img {
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+    }
+
+    .team h3 {
+        margin: 0;
+        font-size: 1.2rem;
+    }
+
+    .vs {
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    .event-details {
+        padding: 1rem;
+        text-align: center;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .event-details p {
+        margin: 0.5rem 0;
+    }
+
+    .btn-bet {
+        margin-top: auto;
+        display: inline-block;
+    }
+
+</style>
+<!-- Style for Show all the Events in Database End -->
+
+
+
+
+<!-- Header Start -->
+
+<div class="jumbotron jumbotron-fluid mb-5">
+    <div class="container text-center py-5">
+        <h1 class="text-white mb-4">Feeling Lucky?</h1>
+        <h1 class="text-white display-3 mb-5">Win Big with Jackpot Haven</h1>
+
+        <div class="mx-auto" style="width: 100%; max-width: 600px;">
+            <div class="input-group justify-content-center">
+                <a href="{% url 'allevents' %}"><button class="btn btn-primary px-5">Try Your Luck</button></a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Header End -->
+
+
+<!-- Show all the Events in Database -->
+<div class="container-fluid pt-5">
+    <div class="container">
+        <div class="text-center pb-2">
+            <h6 class="text-primary text-uppercase font-weight-bold">UPCOMING MATCHES</h6>
+            <h1 class="mb-4">Bet on Your Favorite Team</h1>
+        </div>
+        <div class="slider-container">
+            <div class="event-list">
+                {% for event in events %}
+                <div class="event-card">
+                    <div class="bg-secondary">
+                        <div class="event-info">
+                            <div class="team team1">
+                                <img src="{{ event.team1.logo.url }}" alt="{{ event.team1.name }} Logo">
+                                <h3>{{ event.team1.name }}</h3>
+                            </div>
+                            <div class="vs">vs</div>
+                            <div class="team team2">
+                                <img src="{{ event.team2.logo.url }}" alt="{{ event.team2.name }} Logo">
+                                <h3>{{ event.team2.name }}</h3>
+                            </div>
+                        </div>
+                        <div class="event-details">
+                            <p><strong>Date and Time:</strong> {{ event.date_time|date:"F j, Y, g:i a" }}</p>
+                            <p><strong>Sport:</strong> {{ event.sport_type.name }}</p>
+                            <p><strong>Betting Price:</strong> {{ event.betting_price }}</p>
+                            <p></p>
+                            <p style="cursor: pointer;"><a href="{% url 'detail_of_event' event.id %}">See More</a></p>
+
+
+                            <a href="{% url 'checkout' event.id %}" class="btn btn-primary btn-bet">Bet Now</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="slider-btn-container">
+            <button class="slider-btn prev-btn"><i class="fas fa-chevron-left"></i></button>
+            <button class="slider-btn next-btn"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+</div>
+<!-- Show all the Events in Database End -->
+
+
+<!-- Features Start -->
+<div class="container-fluid bg-secondary my-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-5">
+                <img class="img-fluid w-100" src="{% static 'img/feature.jpg' %}" alt="">
+            </div>
+            <div class="col-lg-7 py-5 py-lg-0">
+                <h6 class="text-primary text-uppercase font-weight-bold">Why Choose Us</h6>
+                <h1 class="mb-4">The Best Place to Try Your Luck and Win Big</h1>
+                <p class="mb-4">At Jackpot Haven, we offer a secure and exciting platform for you to play and win. Our
+                    games are designed to be fair and fun, giving you a thrilling experience every time you play. Join
+                    us and see why we are the top choice for lottery enthusiasts.</p>
+                <ul class="list-inline">
+                    <li>
+                        <h6><i class="far fa-dot-circle text-primary mr-3"></i>High Winning Chances</h6>
+                    </li>
+                    <li>
+                        <h6><i class="far fa-dot-circle text-primary mr-3"></i>Instant Payouts</h6>
+                    </li>
+                    <li>
+                        <h6><i class="far fa-dot-circle text-primary mr-3"></i>24/7 Customer Support</h6>
+                    </li>
+                </ul>
+                <a href="" class="btn btn-primary mt-3 py-2 px-4">Learn More</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Features End -->
+
+
+
+
+<!-- Testimonial Start -->
+<div class="container-fluid py-5">
+    <div class="container">
+        <div class="text-center pb-2">
+            <h6 class="text-primary text-uppercase font-weight-bold">Testimonial</h6>
+            <h1 class="mb-4">Our Clients Say</h1>
+        </div>
+        <div class="owl-carousel testimonial-carousel">
+            <div class="position-relative bg-secondary p-4">
+                <i class="fa fa-3x fa-quote-right text-primary position-absolute" style="top: -6px; right: 0;"></i>
+                <div class="d-flex align-items-center mb-3">
+                    <img class="img-fluid rounded-circle" src="{% static 'img/testimonial-1.jpg' %}"
+                        style="width: 60px; height: 60px;" alt="">
+                    <div class="ml-3">
+                        <h6 class="font-weight-semi-bold m-0">Client Name</h6>
+                        <small>- Profession</small>
+                    </div>
+                </div>
+                <p class="m-0">Sed ea amet kasd elitr stet, stet rebum et ipsum est duo elitr clita lorem. Dolor ipsum
+                    sanct clita</p>
+            </div>
+            <div class="position-relative bg-secondary p-4">
+                <i class="fa fa-3x fa-quote-right text-primary position-absolute" style="top: -6px; right: 0;"></i>
+                <div class="d-flex align-items-center mb-3">
+                    <img class="img-fluid rounded-circle" src="{% static 'img/testimonial-2.jpg' %}"
+                        style="width: 60px; height: 60px;" alt="">
+                    <div class="ml-3">
+                        <h6 class="font-weight-semi-bold m-0">Client Name</h6>
+                        <small>- Profession</small>
+                    </div>
+                </div>
+                <p class="m-0">Sed ea amet kasd elitr stet, stet rebum et ipsum est duo elitr clita lorem. Dolor ipsum
+                    sanct clita</p>
+            </div>
+            <div class="position-relative bg-secondary p-4">
+                <i class="fa fa-3x fa-quote-right text-primary position-absolute" style="top: -6px; right: 0;"></i>
+                <div class="d-flex align-items-center mb-3">
+                    <img class="img-fluid rounded-circle" src="{% static 'img/testimonial-3.jpg' %}"
+                        style="width: 60px; height: 60px;" alt="">
+                    <div class="ml-3">
+                        <h6 class="font-weight-semi-bold m-0">Client Name</h6>
+                        <small>- Profession</small>
+                    </div>
+                </div>
+                <p class="m-0">Sed ea amet kasd elitr stet, stet rebum et ipsum est duo elitr clita lorem. Dolor ipsum
+                    sanct clita</p>
+            </div>
+            <div class="position-relative bg-secondary p-4">
+                <i class="fa fa-3x fa-quote-right text-primary position-absolute" style="top: -6px; right: 0;"></i>
+                <div class="d-flex align-items-center mb-3">
+                    <img class="img-fluid rounded-circle" src="{% static 'img/testimonial-4.jpg' %}"
+                        style="width: 60px; height: 60px;" alt="">
+                    <div class="ml-3">
+                        <h6 class="font-weight-semi-bold m-0">Client Name</h6>
+                        <small>- Profession</small>
+                    </div>
+                </div>
+                <p class="m-0">Sed ea amet kasd elitr stet, stet rebum et ipsum est duo elitr clita lorem. Dolor ipsum
+                    sanct clita</p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Testimonial End -->
+
+<!-- scfipt for Show all the Events in Database -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const eventList = document.querySelector('.event-list');
+        const prevBtn = document.querySelector('.prev-btn');
+        const nextBtn = document.querySelector('.next-btn');
+
+        let currentIndex = 0;
+        const itemsToShow = 3;
+        const itemCount = document.querySelectorAll('.event-card').length;
+        const itemWidth = document.querySelector('.event-card').offsetWidth + 20; // card width + padding
+
+        function updateSliderPosition() {
+            eventList.style.transform = `translateX(${-currentIndex * itemWidth}px)`;
+        }
+
+        nextBtn.addEventListener('click', () => {
+            if (currentIndex < itemCount - itemsToShow) {
+                currentIndex++;
+            } else {
+                currentIndex = 0;
+            }
+            updateSliderPosition();
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+            } else {
+                currentIndex = itemCount - itemsToShow;
+            }
+            updateSliderPosition();
+        });
+
+        // Auto slide
+        setInterval(() => {
+            if (currentIndex < itemCount - itemsToShow) {
+                currentIndex++;
+            } else {
+                currentIndex = 0;
+            }
+            updateSliderPosition();
+        }, 5000);
+    });
+</script>
+<!-- scfipt for Show all the Events in Database End-->
+
+
+{% endblock content %}

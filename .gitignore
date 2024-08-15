@@ -1,0 +1,17 @@
+# Sensitive Information
+.env
+secrets.json
+
+# Local Environment Files
+env/
+venv/
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+
+# Static and Media Files (if generated)
+# static/
+# media/
+

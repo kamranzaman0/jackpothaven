@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upcoming Events | Jackpot Haven</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .site-header {
+            background-color: #333;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .main-content {
+            padding: 2rem;
+        }
+
+        .event-header {
+            margin-bottom: 2rem;
+        }
+
+        .slider-container {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .event-list {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .event-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            min-width: 300px; /* ensure all cards have a minimum width */
+            margin: 0 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .event-info {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 1rem;
+            background-color: #f8f8f8;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .team img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+        }
+
+        .team h3 {
+            margin: 0;
+            font-size: 1.2rem;
+        }
+
+        .vs {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .event-details {
+            padding: 1rem;
+        }
+
+        .event-details p {
+            margin: 0.5rem 0;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .site-footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            border: none;
+            color: white;
+            padding: 1rem;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        .prev-btn {
+            left: 0;
+        }
+
+        .next-btn {
+            right: 0;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <header class="site-header">
+        <h1>Jackpot Haven</h1>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="event-header text-center">
+                <h2>Upcoming Matches</h2>
+                <p>Bet on your favorite sports and win big!</p>
+            </div>
+            <div class="slider-container">
+                <div class="event-list">
+                    {% for event in events %}
+                    <div class="event-card">
+                        <div class="event-info">
+                            <div class="team team1">
+                                <img src="{{ event.team1.logo.url }}" alt="{{ event.team1.name }} Logo">
+                                <h3>{{ event.team1.name }}</h3>
+                            </div>
+                            <div class="vs">vs</div>
+                            <div class="team team2">
+                                <img src="{{ event.team2.logo.url }}" alt="{{ event.team2.name }} Logo">
+                                <h3>{{ event.team2.name }}</h3>
+                            </div>
+                        </div>
+                        <div class="event-details">
+                            <p><strong>Date and Time:</strong> {{ event.date_time|date:"F j, Y, g:i a" }}</p>
+                            <p><strong>Sport:</strong> {{ event.sport_type.name }}</p>
+                            <p><strong>Betting Price:</strong> {{ event.betting_price }}</p>
+                            <a href="#" class="btn btn-primary">Bet Now</a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <button class="slider-btn prev-btn"><i class="fas fa-chevron-left"></i></button>
+                <button class="slider-btn next-btn"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const eventList = document.querySelector('.event-list');
+            const prevBtn = document.querySelector('.prev-btn');
+            const nextBtn = document.querySelector('.next-btn');
+
+            let currentIndex = 0;
+            const itemsToShow = 3;
+            const itemCount = document.querySelectorAll('.event-card').length;
+            const itemWidth = document.querySelector('.event-card').offsetWidth + 32; // card width + margin
+
+            function updateSliderPosition() {
+                eventList.style.transform = `translateX(${-currentIndex * itemWidth}px)`;
+            }
+
+            nextBtn.addEventListener('click', () => {
+                if (currentIndex < itemCount - itemsToShow) {
+                    currentIndex++;
+                    updateSliderPosition();
+                }
+            });
+
+            prevBtn.addEventListener('click', () => {
+                if (currentIndex > 0) {
+                    currentIndex--;
+                    updateSliderPosition();
+                }
+            });
+
+            // Auto slide
+            setInterval(() => {
+                if (currentIndex < itemCount - itemsToShow) {
+                    currentIndex++;
+                } else {
+                    currentIndex = 0;
+                }
+                updateSliderPosition();
+            }, 5000);
+        });
+    </script>
+</body>
+</html>

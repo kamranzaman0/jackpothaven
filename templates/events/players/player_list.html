@@ -1,0 +1,22 @@
+
+
+{% extends 'adminsite/dashboard.html' %}
+
+{% block admincontent %}
+
+<main id="main" class="main">
+    <h2>Players</h2>
+    <a href="{% url 'player_create' %}">Create New Player</a>
+    <ul>
+        {% for player in players %}
+        <li>
+            {{ player.name }} ({{ player.team.name }})
+            <a href="{% url 'player_update' player.id %}">Edit</a>
+            <a href="{% url 'player_delete' player.id %}">Delete</a>
+        </li>
+        {% endfor %}
+    </ul>
+</main> 
+{% endblock %}
+
+

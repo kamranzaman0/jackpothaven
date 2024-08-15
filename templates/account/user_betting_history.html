@@ -1,0 +1,48 @@
+{% extends 'account/account_base.html' %}
+
+
+{% block accountcontent %}
+{% load static %}
+
+
+<!-- Main Container -->
+<div class="container-fluid bg-light py-5">
+    <div class="container">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav class="col-md-3">
+                <div class="list-group">
+                    <a href="{% url 'user_profile' %}" class="list-group-item list-group-item-action active">
+                        <i class="fas fa-user"></i> Profile
+                    </a>
+                    <a href="{% url 'user_betting_history' %}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-history"></i> Betting History
+                    </a>
+                    <a href="{% url 'user_balance' %}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-wallet"></i> Balance
+                    </a>
+                    <a href="{% url 'logout' %}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
+                </div>
+            </nav>
+            <!-- Main Content -->
+            <div class="col-md-9">
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h2 class="card-title mb-0">Your Betting History</h2>
+                    </div>
+                    <div class="card-body">
+                       <h1>We are Working on It...</h1>
+                       <h2>Sorry For the Inconvinient... </h2>
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock accountcontent %}

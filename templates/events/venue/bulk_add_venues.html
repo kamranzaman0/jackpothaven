@@ -1,0 +1,17 @@
+
+
+
+{% extends 'adminsite/dashboard.html' %}
+
+{% block admincontent %}
+
+<main id="main" class="main">
+    <h1>Bulk Add Venues</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Add Venues</button>
+    </form>
+    <a href="{% url 'venue_list' %}">Back to Venues List</a>
+</main>
+{% endblock %}

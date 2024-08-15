@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% load static %}
+
+<style>
+    .slider-container {
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+    }
+
+    .event-list {
+        display: flex;
+        transition: transform 0.5s ease;
+    }
+
+    .event-card {
+        flex: 0 0 33.333%;
+        box-sizing: border-box;
+        padding: 0 10px;
+    }
+
+    .slider-btn-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center; /* Center vertically */
+        position: absolute;
+        top: 90%;
+        left: 0;
+        right: 0;
+        transform: translateY(-50%);
+        z-index: 100;
+    }
+
+    .slider-btn {
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        border: none;
+        padding: 20px;
+        cursor: pointer;
+        z-index: 100;
+    }
+</style>
+
+<!-- Pricing Plan Start -->
+<div class="container-fluid pt-5">
+    <div class="container">
+        <div class="text-center pb-2">
+            <h6 class="text-primary text-uppercase font-weight-bold">Pricing Plan</h6>
+            <h1 class="mb-4">Affordable Pricing Packages</h1>
+        </div>
+        <div class="slider-container">
+            <div class="event-list">
+                {% for event in events %}
+                <div class="event-card">
+                    <div class="bg-secondary">
+                        <div class="text-center p-4">
+                            <h1 class="display-4 mb-0">
+                                <small class="align-top text-muted font-weight-medium" style="font-size: 22px; line-height: 45px;">$</small>49<small class="align-bottom text-muted font-weight-medium" style="font-size: 16px; line-height: 40px;">/Mo</small>
+                            </h1>
+                        </div>
+                        <div class="bg-primary text-center p-4">
+                            <h3 class="m-0">Basic</h3>
+                        </div>
+                        <div class="d-flex flex-column align-items-center py-4">
+                            <p>HTML5 & CSS3</p>
+                            <p>Bootstrap 4</p>
+                            <p>Responsive Layout</p>
+                            <p>Compatible With All Browsers</p>
+                            <a href="" class="btn btn-primary py-2 px-4 my-2">Order Now</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="slider-btn-container">
+            <button class="slider-btn prev-btn"><i class="fas fa-chevron-left"></i></button>
+            <button class="slider-btn next-btn"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+</div>
+<!-- Pricing Plan End -->
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const eventList = document.querySelector('.event-list');
+        const prevBtn = document.querySelector('.prev-btn');
+        const nextBtn = document.querySelector('.next-btn');
+
+        let currentIndex = 0;
+        const itemsToShow = 3;
+        const itemCount = document.querySelectorAll('.event-card').length;
+        const itemWidth = document.querySelector('.event-card').offsetWidth + 20; // card width + padding
+
+        function updateSliderPosition() {
+            eventList.style.transform = `translateX(${-currentIndex * itemWidth}px)`;
+        }
+
+        nextBtn.addEventListener('click', () => {
+            if (currentIndex < itemCount - itemsToShow) {
+                currentIndex++;
+            } else {
+                currentIndex = 0;
+            }
+            updateSliderPosition();
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+            } else {
+                currentIndex = itemCount - itemsToShow;
+            }
+            updateSliderPosition();
+        });
+
+        // Auto slide
+        setInterval(() => {
+            if (currentIndex < itemCount - itemsToShow) {
+                currentIndex++;
+            } else {
+                currentIndex = 0;
+            }
+            updateSliderPosition();
+        }, 5000);
+    });
+</script>
+
+{% endblock content %}

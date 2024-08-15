@@ -1,0 +1,199 @@
+{% extends 'adminsite/loginbase.html' %}
+
+{% block content %}
+{% load static %}
+
+<!-- Register Form -->
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-5">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white text-center">
+                    <h4>Register at Jackpot Haven</h4>
+                </div>
+                <div class="card-body">
+                    <form method="POST" onsubmit="return validateForm()" id="signupForm">
+                        {% csrf_token %}
+                        {% if messages %}
+                        {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}" role="alert">
+                            {{ message }}
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                        <div class="form-group">
+                            <label for="first_name">First Name</label>
+                            <input type="text" name="first_name" class="form-control" id="first_name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="last_name">Last Name</label>
+                            <input type="text" name="last_name" class="form-control" id="last_name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" name="email" class="form-control" id="email" required>
+                            <div id="emailError" class="error text-danger"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" name="username" class="form-control" id="username" required>
+                            <div id="usernameError" class="error text-danger"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" name="password" class="form-control" id="password" required>
+                            <input type="checkbox" id="showPassword"> Show Password
+                            <div id="passwordError" class="error text-danger"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirm_password">Confirm Password</label>
+                            <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+                            <input type="checkbox" id="showCPassword"> Show Password
+                            <div id="confirmPasswordError" class="error text-danger"></div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Register</button>
+                    </form>
+                    <div class="text-center mt-3">
+                        <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let emailValid = false;
+    let usernameValid = false;
+
+    function validateEmail(email) {
+        const re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        return re.test(String(email).toLowerCase());
+    }
+
+    function validateUsername(username) {
+        const re = /^[a-zA-Z0-9]{4,}$/;
+        return re.test(String(username));
+    }
+
+    function validatePassword(password) {
+        // At least one number, one lowercase and one uppercase letter
+        // At least six characters
+        const re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+        return re.test(String(password));
+    }
+
+    function validateForm() {
+        let isValid = true;
+
+        // Validate Email
+        const email = document.getElementById("email").value;
+        const emailError = document.getElementById("emailError");
+        if (!validateEmail(email)) {
+            emailError.textContent = "Invalid email format";
+            isValid = false;
+        } else if (!emailValid) {
+            emailError.textContent = "Email is already used";
+            isValid = false;
+        } else {
+            emailError.textContent = "";
+        }
+
+        // Validate Username
+        const username = document.getElementById("username").value;
+        const usernameError = document.getElementById("usernameError");
+        if (!validateUsername(username)) {
+            usernameError.textContent = "Username must be at least 4 characters long and contain only letters and numbers";
+            isValid = false;
+        } else if (!usernameValid) {
+            usernameError.textContent = "Username is already used";
+            isValid = false;
+        } else {
+            usernameError.textContent = "";
+        }
+
+        // Validate Password
+        const password = document.getElementById("password").value;
+        const passwordError = document.getElementById("passwordError");
+        if (!validatePassword(password)) {
+            passwordError.textContent = "Password must be at least 6 characters long, contain at least one number, one lowercase and one uppercase letter";
+            isValid = false;
+        } else {
+            passwordError.textContent = "";
+        }
+
+        // Confirm Password
+        const confirmPassword = document.getElementById("confirm_password").value;
+        const confirmPasswordError = document.getElementById("confirmPasswordError");
+        if (password !== confirmPassword) {
+            confirmPasswordError.textContent = "Passwords do not match";
+            isValid = false;
+        } else {
+            confirmPasswordError.textContent = "";
+        }
+
+        return isValid;
+    }
+
+    document.getElementById("email").addEventListener("blur", function() {
+        const email = this.value;
+        const emailError = document.getElementById("emailError");
+
+        if (validateEmail(email)) {
+            fetch(`{% url 'check_user_exists' %}?email=${email}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.email_exists) {
+                        emailError.textContent = "Email is already used";
+                        emailValid = false;
+                    } else {
+                        emailError.textContent = "";
+                        emailValid = true;
+                    }
+                });
+        } else {
+            emailError.textContent = "Invalid email format";
+            emailValid = false;
+        }
+    });
+
+    document.getElementById("username").addEventListener("blur", function() {
+        const username = this.value;
+        const usernameError = document.getElementById("usernameError");
+
+        if (validateUsername(username)) {
+            fetch(`{% url 'check_user_exists' %}?username=${username}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.username_exists) {
+                        usernameError.textContent = "Username is already used";
+                        usernameValid = false;
+                    } else {
+                        usernameError.textContent = "";
+                        usernameValid = true;
+                    }
+                });
+        } else {
+            usernameError.textContent = "Username must be at least 4 characters long and contain only letters and numbers";
+            usernameValid = false;
+        }
+    });
+    document.getElementById('showPassword').addEventListener('change', function() {
+        var passwordInput = document.getElementById('password');
+        if (this.checked) {
+            passwordInput.type = 'text';
+        } else {
+            passwordInput.type = 'password';
+        }
+    });
+    document.getElementById('showCPassword').addEventListener('change', function() {
+        var passwordInput = document.getElementById('confirm_password');
+        if (this.checked) {
+            passwordInput.type = 'text';
+        } else {
+            passwordInput.type = 'password';
+        }
+    });
+</script>
+
+{% endblock content %}

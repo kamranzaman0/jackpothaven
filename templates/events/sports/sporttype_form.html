@@ -1,0 +1,16 @@
+{% extends 'adminsite/dashboard.html' %}
+
+{% block admincontent %}
+
+<main id="main" class="main">
+    <div class="container mt-4">
+        <h2>{{ title }}</h2>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a href="" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</main>
+{% endblock %}

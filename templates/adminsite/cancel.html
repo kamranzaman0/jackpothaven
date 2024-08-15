@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% load static %}
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header bg-danger text-white">
+            Payment Canceled
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Payment Canceled</h5>
+            <p class="card-text">Your transaction was canceled. If you have any questions, please contact our support team.</p>
+            <a href="/" class="btn btn-primary">Return to Home</a>
+            <a href="/checkout/{{ event_id }}/" class="btn btn-secondary">Try Again</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

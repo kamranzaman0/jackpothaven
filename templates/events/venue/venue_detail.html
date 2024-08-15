@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ venue.name }}</title>
+</head>
+<body>
+    <h1>{{ venue.name }}</h1>
+    <p>City: {{ venue.city }}</p>
+    <p>Country: {{ venue.country }}</p>
+    <p>Capacity: {{ venue.capacity }}</p>
+    <a href="{% url 'venue_update' venue.pk %}">Edit</a>
+    <a href="{% url 'venue_list' %}">Back to List</a>
+</body>
+</html>

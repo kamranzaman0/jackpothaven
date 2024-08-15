@@ -1,0 +1,56 @@
+
+
+
+
+
+
+    {% extends 'adminsite/dashboard.html' %}
+
+{% block admincontent %}
+<style>
+    /* adminsite/static/css/styles.css */
+
+/* Style for the user list table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+th {
+    background-color: #f2f2f2;
+    color: #333;
+    font-weight: bold;
+}
+
+tr:hover {
+    background-color: #f5f5f5;
+}
+
+/* Style for the Change Role link */
+a {
+    color: blue;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+</style>
+
+<main id="main" class="main">
+    <h1>Change User Role</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save Changes</button>
+    </form>
+
+</main>
+{% endblock %}

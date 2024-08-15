@@ -1,0 +1,21 @@
+{% extends 'adminsite/dashboard.html' %}
+
+{% block admincontent %}
+
+<main id="main" class="main">
+    <h2>Vanues</h2>
+    <a href="{% url 'venue_create' %}">Create New Venue</a>
+    <ul>
+        {% for venue in venues %}
+        <li>
+            {{ venue.name }} 
+            {{ venue.city }}
+            {{ venue.country }}
+            {{ venue.capacity }}
+            <a href="{% url 'venue_update' venue.pk %}">Edit</a>
+            <a href="{% url 'venue_delete' venue.pk %}">Delete </a>
+        </li>
+        {% endfor %}
+    </ul>
+</main>
+{% endblock %}

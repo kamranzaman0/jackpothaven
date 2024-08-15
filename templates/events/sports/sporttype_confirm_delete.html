@@ -1,0 +1,17 @@
+
+{% extends 'adminsite/dashboard.html' %}
+
+{% block admincontent %}
+
+<main id="main" class="main">
+    <div class="container mt-4">
+        <h2>Confirm Delete</h2>
+        <p>Are you sure you want to delete the sport type "{{ sporttype }}"?</p>
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Yes, delete</button>
+            <a href="{% url 'sporttype_list' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</main>
+{% endblock %}

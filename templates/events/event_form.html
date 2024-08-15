@@ -1,0 +1,25 @@
+{% extends 'adminsite/dashboard.html' %}
+
+{% block admincontent %}
+
+<main id="main" class="main">
+    <h2>{{ title }}</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save</button>
+    </form>
+    <a href="{% url 'event_list' %}">Cancel</a>
+</main>
+
+<!-- Initialize flatpickr -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        flatpickr("input[type='datetime-local']", {
+            enableTime: true,
+            dateFormat: "Y-m-d H:i",
+            time_24hr: true
+        });
+    });
+</script>
+{% endblock %}

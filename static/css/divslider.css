@@ -1,0 +1,88 @@
+.slider-container {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+}
+
+.event-list {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+.event-card {
+    flex: 0 0 calc(33.333% - 20px);
+    /* Adjust the width as needed */
+    box-sizing: border-box;
+    padding: 0 10px;
+    height: 100%;
+    min-width: 300px;
+    /* Minimum width for each card */
+    max-width: 400px;
+    /* Maximum width for each card */
+}
+
+.slider-btn-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* Center vertically */
+    position: absolute;
+    top: 90%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+    z-index: 100;
+}
+
+.slider-btn {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 20px;
+    cursor: pointer;
+    z-index: 100;
+}
+
+.event-info {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 1rem;
+    background-color: #f8f8f8;
+    border-bottom: 1px solid #ddd;
+    height: 100%;
+}
+
+.team img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+}
+
+.team h3 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.vs {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.event-details {
+    padding: 1rem;
+    text-align: center;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.event-details p {
+    margin: 0.5rem 0;
+}
+
+.btn-bet {
+    margin-top: auto;
+    display: inline-block;
+}
